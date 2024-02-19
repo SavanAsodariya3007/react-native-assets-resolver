@@ -1,18 +1,38 @@
-import React, { useEffect } from 'react'
-import { View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Image, View } from 'react-native'
 import { Asset } from 'react-native-assets-resolver'
 
-
 const App = () => {
+  const [image, setImage] = useState('')
   useEffect(() => {
-    const font_response = Asset.fromModule(require('./assets/fonts/RobotoSlab-Black.ttf'))
-    console.log("font_response ", font_response)
+    async function fetchData() {
+      const font_response = Asset.fromModule(
+        require('./assets/fonts/RobotoSlab-Black.ttf')
+      )
+      console.log('font_response ', font_response.downloadAsync())
 
-    const image_response = Asset.fromModule(require('./assets/images/acheimentIcon.png'))
-    console.log("image_response ", image_response)
-  },[]);
+      const image_response = Asset.fromModule(
+        require('./assets/images/acheimentIcon.png')
+      )
+      console.log('image_response ', image_response)
 
-  return <View />
+      const remote_response = Asset.fromURI(
+        'https://images.pexels.com/photos/1366942/pexels-photo-1366942.jpeg?auto=compress&cs=tinysrgb&w=600'
+      )
+      await remote_response.downloadAsync?.()
+      setImage(remote_response.localuri)
+      console.log('remote_response ', remote_response)
+    }
+    fetchData()
+  }, [])
+
+  return image !== '' ? (
+    <View>
+      <Image source={{ uri: image }} style={{ height: 120, width: 120 }} />
+    </View>
+  ) : (
+    <View />
+  )
 }
 
 export default App
