@@ -1,5 +1,5 @@
 import { getAssetByID } from 'react-native/Libraries/Image/AssetRegistry'
-import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource'
+import { Image } from 'react-native'
 
 import * as Utils from './utils'
 
@@ -48,13 +48,13 @@ export class Asset {
     }
   }
 
-  static fromModule(module_id: number | string): Asset {
+  static fromModule(module_id: number | string): any {
     if (typeof module_id === 'string') {
       return Asset.fromURI(module_id)
     }
 
     const meta = getAssetByID(module_id)
-    const { uri } = resolveAssetSource(module_id)
+    const { uri } = Image.resolveAssetSource(module_id)
     return new Asset({
       name: meta.name,
       type: meta.type,
@@ -67,6 +67,14 @@ export class Asset {
 
   static fromURI(uri: string): Asset {
     let type = ''
+    if (uri === '') {
+      return new Asset({
+        name: '',
+        type: '',
+        hash: null,
+        uri: '',
+      })
+    }
     if (uri.indexOf(';base64') > -1) {
       type = uri.split(';')[0].split('/')[1]
     } else {
@@ -85,6 +93,9 @@ export class Asset {
   }
 
   async downloadAsync(): Promise<this> {
+    if(this.uri === ''){
+      return this;
+    }
     if (this.downloaded) {
       return this
     }
