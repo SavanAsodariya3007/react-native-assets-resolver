@@ -1,7 +1,7 @@
 {
   "name": "react-native-assets-resolver",
   "version": "1.0.0",
-  "description": "",
+  "description": "Get information of Assets and pass them into other APIS",
   "homepage": "https://github.com/SavanAsodariya3007/react-native-assets-resolver#readme",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -51,5 +51,21 @@
   },
   "dependencies": {
     "url-parse": "^1.5.10"
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SavanAsodariya3007/react-native-assets-resolver.git"
+  },
+  "keywords": [
+    "react-native",
+    "assets",
+    "assets-resolver"
+  ],
+  "bugs": {
+    "url": "https://github.com/SavanAsodariya3007/react-native-assets-resolver/issues"
   }
 }
